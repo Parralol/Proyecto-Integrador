@@ -9,6 +9,7 @@ import com.ieti.health.repository.User.UserDto;
 import com.ieti.health.service.UserService;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -25,13 +26,15 @@ public class UserController {
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody UserDto dto) {
         URI createdUserUri = URI.create("");
-        usersService.save(new User(dto));
+        User user = new User(dto);
+
+        usersService.save(user);
         return ResponseEntity.created(createdUserUri).body(null);
     }
 
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(new ArrayList<User>(usersService.getUsers().values()));
     }
 
     @GetMapping("{id}")
