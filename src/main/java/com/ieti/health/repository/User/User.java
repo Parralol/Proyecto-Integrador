@@ -1,4 +1,4 @@
-package com.ieti.health.controller.User;
+package com.ieti.health.repository.User;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
