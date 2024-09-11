@@ -1,28 +1,28 @@
 package com.ieti.health.repository.User;
 
-public class UserDto {
+public class DocumentDto {
     private final String name;
-    private final String lastName;
+    private final String body;
     private final String email;
     private final String password;
 
-    public UserDto() {
+    public DocumentDto() {
         this.name = "";
-        this.lastName = "";
+        this.body = "";
         this.email = "";
         this.password = "";
     }
 
-    public UserDto(String name, String lastName, String email, String password) {
+    public DocumentDto(String name, String body, String email, String password) {
         this.name = name;
-        this.lastName = lastName;
+        this.body = body;
         this.email = email;
         this.password = password;
     }
 
-    public UserDto(String name, String lastName, String email) {
+    public DocumentDto(String name, String body, String email) {
         this.name = name;
-        this.lastName = lastName;
+        this.body = body;
         this.email = email;
         this.password = "";
     }
@@ -31,8 +31,8 @@ public class UserDto {
         return name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getBody() {
+        return body;
     }
 
     public String getEmail() {

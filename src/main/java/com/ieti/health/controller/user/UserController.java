@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.ieti.health.repository.User.User;
-import com.ieti.health.repository.User.UserDto;
-import com.ieti.health.service.UserService;
+import com.ieti.health.repository.User.Document;
+import com.ieti.health.repository.User.DocumentDto;
+import com.ieti.health.service.DocumentService;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -17,37 +17,37 @@ import java.util.List;
 public class UserController {
 
     @SuppressWarnings("unused")
-    private final UserService usersService;
+    private final DocumentService usersService;
 
-    public UserController(@Autowired UserService usersService) {
+    public UserController(@Autowired DocumentService usersService) {
         this.usersService = usersService;
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody UserDto dto) {
+    public ResponseEntity<Document> createUser(@RequestBody DocumentDto dto) {
         URI createdUserUri = URI.create("");
-        User user = new User(dto);
+        Document user = new Document(dto);
 
         usersService.save(user);
         return ResponseEntity.created(createdUserUri).body(null);
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        return ResponseEntity.ok(new ArrayList<User>(usersService.findAll()));
+    public ResponseEntity<List<Document>> getAllUsers() {
+        return ResponseEntity.ok(new ArrayList<Document>(usersService.findAll()));
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<User> findById(@PathVariable("id") String id) {
+    public ResponseEntity<Document> findById(@PathVariable("id") String id) {
         System.out.println(id);
         return ResponseEntity.ok(usersService.findById(id).get());
     }
 
     @PutMapping
-    public ResponseEntity<User> updateUser(@PathVariable("id") String id, @RequestBody UserDto dto) {
-        User user = usersService.findById(id).get();
+    public ResponseEntity<Document> updateUser(@PathVariable("id") String id, @RequestBody DocumentDto dto) {
+        Document user = usersService.findById(id).get();
         user.setEmail(dto.getEmail());
-        user.setLastName(dto.getLastName());
+        user.setBody(dto.getBody());
         user.setName(dto.getName());
         usersService.save(user);
         return ResponseEntity.ok(null);

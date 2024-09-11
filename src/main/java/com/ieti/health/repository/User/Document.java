@@ -1,39 +1,53 @@
 package com.ieti.health.repository.User;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
-@Document("users")
-public class User implements Serializable{
+@org.springframework.data.mongodb.core.mapping.Document("document")
+public class Document implements Serializable{
 
     @Id
-    private  String id;
+    private String id;
 
-    private final Date createdAt;
+    private  Date createdAt;
     private String name;
-    private String lastName;
+    private String body;
     private String email;
     @SuppressWarnings("unused")
     private String passwordHash;
 
-    public User(String id, String name, String lastName, String email, String password) {
+    public void setId(String id) {
+        this.id = id;
+    }
+
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+
+    public Document(){
+        this.id = UUID.randomUUID().toString();
+        this.createdAt = new Date();
+    }
+    
+    public Document(String id, String name, String body, String email, String password) {
         this.id = id;
         this.name = name;
-        this.lastName = lastName;
+        this.body = body;
         this.email = email;
         this.passwordHash = new BCryptPasswordEncoder().encode(password);
         this.createdAt = new Date();
     }
 
-    public User(UserDto userDto) {
+    public Document(DocumentDto userDto) {
         this.id = UUID.randomUUID().toString();
         this.name = userDto.getName();
-        this.lastName = userDto.getLastName();
+        this.body = userDto.getBody();
         this.email = userDto.getEmail();
         this.passwordHash = new BCryptPasswordEncoder().encode(userDto.getPassword());
         this.createdAt = new Date();
@@ -51,12 +65,12 @@ public class User implements Serializable{
         this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getBody() {
+        return body;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setBody(String body) {
+        this.body = body;
     }
 
     public String getEmail() {
@@ -75,9 +89,9 @@ public class User implements Serializable{
         this.passwordHash = passwordHash;
     }
 
-    public void update(UserDto userDto) {
+    public void update(DocumentDto userDto) {
         this.name = userDto.getName();
-        this.lastName = userDto.getLastName();
+        this.body = userDto.getBody();
         this.email = userDto.getEmail();
         if (!userDto.getPassword().isEmpty()) {
             this.passwordHash = new BCryptPasswordEncoder().encode(userDto.getPassword());
