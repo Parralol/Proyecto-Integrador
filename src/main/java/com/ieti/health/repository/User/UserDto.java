@@ -1,4 +1,4 @@
-package com.ieti.health.controller.User;
+package com.ieti.health.repository.User;
 
 public class UserDto {
     private final String name;

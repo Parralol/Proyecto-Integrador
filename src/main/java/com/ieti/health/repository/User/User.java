@@ -1,8 +1,9 @@
-package com.ieti.health.controller.User;
+package com.ieti.health.repository.User;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class User {
     private final String id;
@@ -12,8 +13,8 @@ public class User {
     private String email;
     private String passwordHash;
 
-    public User(String id, String name, String lastName, String email, String password) {
-        this.id = id;
+    public User(String name, String lastName, String email, String password) {
+        this.id = UUID.randomUUID().toString();
         this.name = name;
         this.lastName = lastName;
         this.email = email;
@@ -22,14 +23,13 @@ public class User {
     }
 
     public User(UserDto userDto) {
-        this.id = null;
+        this.id = UUID.randomUUID().toString();
         this.name = userDto.getName();
         this.lastName = userDto.getLastName();
         this.email = userDto.getEmail();
         this.passwordHash = new BCryptPasswordEncoder().encode(userDto.getPassword());
         this.createdAt = new Date();
     }
-
 
     public String getId() {
         return id;
@@ -75,4 +75,5 @@ public class User {
             this.passwordHash = new BCryptPasswordEncoder().encode(userDto.getPassword());
         }
     }
+
 }
