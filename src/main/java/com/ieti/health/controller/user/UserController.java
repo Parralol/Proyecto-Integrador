@@ -34,18 +34,18 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
-        return ResponseEntity.ok(new ArrayList<User>(usersService.getUsers().values()));
+        return ResponseEntity.ok(new ArrayList<User>(usersService.findAll()));
     }
 
     @GetMapping("{id}")
     public ResponseEntity<User> findById(@PathVariable("id") String id) {
         System.out.println(id);
-        return ResponseEntity.ok(usersService.getUser(id));
+        return ResponseEntity.ok(usersService.findById(id).get());
     }
 
     @PutMapping
     public ResponseEntity<User> updateUser(@PathVariable("id") String id, @RequestBody UserDto dto) {
-        User user = usersService.getUser(id);
+        User user = usersService.findById(id).get();
         user.setEmail(dto.getEmail());
         user.setLastName(dto.getLastName());
         user.setName(dto.getName());

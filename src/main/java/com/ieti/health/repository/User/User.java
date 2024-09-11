@@ -1,20 +1,28 @@
 package com.ieti.health.repository.User;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
-public class User {
-    private final String id;
+@Document("users")
+public class User implements Serializable{
+
+    @Id
+    private  String id;
+
     private final Date createdAt;
     private String name;
     private String lastName;
     private String email;
+    @SuppressWarnings("unused")
     private String passwordHash;
 
-    public User(String name, String lastName, String email, String password) {
-        this.id = UUID.randomUUID().toString();
+    public User(String id, String name, String lastName, String email, String password) {
+        this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.email = email;
