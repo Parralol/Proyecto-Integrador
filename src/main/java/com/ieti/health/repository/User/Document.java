@@ -1,10 +1,12 @@
 package com.ieti.health.repository.User;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @org.springframework.data.mongodb.core.mapping.Document("document")
@@ -19,6 +21,7 @@ public class Document implements Serializable{
     private String email;
     @SuppressWarnings("unused")
     private String passwordHash;
+    private List<RoleEnum> roles;
 
     public void setId(String id) {
         this.id = id;
@@ -52,6 +55,11 @@ public class Document implements Serializable{
         this.passwordHash = new BCryptPasswordEncoder().encode(userDto.getPassword());
         this.createdAt = new Date();
     }
+
+    public Document(String email2, String passwordHash2, List<SimpleGrantedAuthority> authorities) {
+        //TODO Auto-generated constructor stub
+    }
+
 
     public String getId() {
         return id;
@@ -97,5 +105,23 @@ public class Document implements Serializable{
             this.passwordHash = new BCryptPasswordEncoder().encode(userDto.getPassword());
         }
     }
+
+    
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+
+    public List<RoleEnum> getRoles() {
+        return roles;
+    }
+
+
+    public void setRoles(List<RoleEnum> roles) {
+        this.roles = roles;
+    }
+
+    
 
 }
